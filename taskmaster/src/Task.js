@@ -1,4 +1,6 @@
-import React from 'react';
+// Task.js
+
+   import React from 'react';
 
    const Task = ({ task, onEdit, onDelete }) => (
 
@@ -18,4 +20,8 @@ import React from 'react';
 
    );
 
+ 
+
    export default Task;
+
+ 

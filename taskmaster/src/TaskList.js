@@ -1,4 +1,8 @@
+// TaskList.js
+
    import React from 'react';
+
+ 
 
    const TaskList = ({ tasks, onTaskClick }) => (
 
@@ -8,7 +12,9 @@
 
          <li key={task.id} onClick={() => onTaskClick(task.id)}>
 
-           {task.title} - {task.completed ? 'Completed' : 'Pending'}
+           {task.title} - {task.dueDate}
+		   <br />
+		   &nbsp;&nbsp;&nbsp;&nbsp;{task.completed ? 'Completed' : 'Pending'}
 
          </li>
 
@@ -17,5 +23,7 @@
      </ul>
 
    );
+
+ 
 
    export default TaskList;
