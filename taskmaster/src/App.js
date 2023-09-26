@@ -40,6 +40,19 @@ import React, { useState } from 'react';
 
 
 
+    const handleCompleteTask = (completedTask) => {
+
+        // Set the task complete
+        completedTask.complete = true;
+
+        setTasks(tasks.map((task) => (task.id === completedTask.id ? completedTask : task)))
+
+        setSelectedTask(null);
+
+    };
+
+
+
      const handleEditTask = (editedTask) => {
 
        // Update the task and clear the selection
@@ -76,7 +89,7 @@ import React, { useState } from 'react';
 
          {selectedTask && (
 
-           <Task task={selectedTask} onEdit={handleEditTask} onDelete={handleDeleteTask} />
+           <Task task={selectedTask} onComplete={handleCompleteTask} onEdit={handleEditTask} onDelete={handleDeleteTask} />
 
          )}
 

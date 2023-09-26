@@ -1,6 +1,6 @@
 import React from 'react';
 
-   const Task = ({ task, onEdit, onDelete }) => (
+   const Task = ({ task, onComplete, onEdit, onDelete }) => (
 
      <div>
 
@@ -9,6 +9,8 @@ import React from 'react';
        <p>{task.description}</p>
 
        <p>Due Date: {task.dueDate}</p>
+
+       <button onClick={() => onComplete(task)}>Complete</button>
 
        <button onClick={() => onEdit(task)}>Edit</button>
 
