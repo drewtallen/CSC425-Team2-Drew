@@ -1,26 +1,91 @@
-import logo from './logo.svg';
-import './App.css';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React, { useState } from 'react';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+   import TaskList from './TaskList';
 
-export default App;
+   import TaskForm from './TaskForm';
+
+   import Task from './Task';
+
+
+
+   const App = () => {
+
+     const [tasks, setTasks] = useState([]);
+
+     const [selectedTask, setSelectedTask] = useState(null);
+
+
+
+     const handleAddTask = (newTask) => {
+
+       // Create a new task with a unique ID and mark it as not completed
+
+       const task = { ...newTask, id: tasks.length + 1, completed: false };
+
+       setTasks([...tasks, task]);
+
+     };
+
+
+
+     const handleTaskClick = (taskId) => {
+
+       // Find and select the clicked task
+
+       const task = tasks.find((t) => t.id === taskId);
+
+       setSelectedTask(task);
+
+     };
+
+
+
+     const handleEditTask = (editedTask) => {
+
+       // Update the task and clear the selection
+
+       setTasks(tasks.map((task) => (task.id === editedTask.id ? editedTask : task)));
+
+       setSelectedTask(null);
+
+     };
+
+
+
+     const handleDeleteTask = (taskId) => {
+
+       // Delete the task and clear the selection
+
+       setTasks(tasks.filter((task) => task.id !== taskId));
+
+       setSelectedTask(null);
+
+     };
+
+
+
+     return (
+
+       <div>
+
+         <h1>TaskMaster</h1>
+
+         <TaskForm onTaskAdd={handleAddTask} />
+
+         <TaskList tasks={tasks} onTaskClick={handleTaskClick} />
+
+         {selectedTask && (
+
+           <Task task={selectedTask} onEdit={handleEditTask} onDelete={handleDeleteTask} />
+
+         )}
+
+       </div>
+
+     );
+
+   };
+
+
+
+   export default App;
