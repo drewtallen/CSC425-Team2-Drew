@@ -1,6 +1,6 @@
 import React from 'react';
 
-   const Task = ({ task, onComplete, onEdit, onDelete }) => (
+   const Task = ({ task, onComplete, onEdit, onDelete, onClose}) => (
 
      <div>
 
@@ -10,11 +10,15 @@ import React from 'react';
 
        <p>Due Date: {task.dueDate}</p>
 
-       <button onClick={() => onComplete(task)}>Complete</button>
+       <p>Task Status: {task.completed ? 'Completed' : 'Pending'}</p>
+
+       <button onClick={() => onComplete(task)}>{task.completed ? 'Incomplete' : 'Complete'}</button>
 
        <button onClick={() => onEdit(task)}>Edit</button>
 
        <button onClick={() => onDelete(task.id)}>Delete</button>
+
+       <button onClick={() => onClose(task)}>Close</button>
 
      </div>
 

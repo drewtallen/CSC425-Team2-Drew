@@ -40,14 +40,15 @@ import React, { useState } from 'react';
 
 
 
-    const handleCompleteTask = (completedTask) => {
+    const handleCompleteTask = (task) => {
 
-        // Set the task complete
-        completedTask.complete = true;
+        // Set the task complete or incomplete
+        task.completed = !task.completed;
 
-        setTasks(tasks.map((task) => (task.id === completedTask.id ? completedTask : task)))
+        //I don't know what this does excatly but it breaks if I take it out
+        setTasks(tasks.map((task) => (task.id === task.id ? task : task)))
 
-        setSelectedTask(null);
+        //setSelectedTask(null);
 
     };
 
@@ -75,6 +76,13 @@ import React, { useState } from 'react';
 
      };
 
+     const handleCloseTask = (task) => {
+
+             //Close the current task
+             setSelectedTask(null);
+
+         };
+
 
 
      return (
@@ -89,7 +97,7 @@ import React, { useState } from 'react';
 
          {selectedTask && (
 
-           <Task task={selectedTask} onComplete={handleCompleteTask} onEdit={handleEditTask} onDelete={handleDeleteTask} />
+           <Task task={selectedTask} onComplete={handleCompleteTask} onEdit={handleEditTask} onDelete={handleDeleteTask} onClose={handleCloseTask}/>
 
          )}
 
