@@ -1,6 +1,8 @@
+
      // App.js
 
-   import React, { useState } from 'react';
+=======
+import React, { useState } from 'react';
 
    import TaskList from './TaskList';
 
@@ -8,15 +10,11 @@
 
    import Task from './Task';
 
- 
-
    const App = () => {
 
      const [tasks, setTasks] = useState([]);
 
      const [selectedTask, setSelectedTask] = useState(null);
-
- 
 
      const handleAddTask = (newTask) => {
 
@@ -28,7 +26,6 @@
 
      };
 
- 
 
      const handleTaskClick = (taskId) => {
 
@@ -40,19 +37,32 @@
 
      };
 
- 
+
+
+    const handleCompleteTask = (task) => {
+
+        // Set the task complete or incomplete
+        task.completed = !task.completed;
+
+        //I don't know what this does excatly but it breaks if I take it out
+        setTasks(tasks.map((task) => (task.id === task.id ? task : task)))
+
+        //setSelectedTask(null);
+
+    };
+
 
      const handleEditTask = (editedTask) => {
 
        // Update the task and clear the selection
 
        setTasks(tasks.map((task) => (task.id === editedTask.id ? editedTask : task)));
-			
+
        setSelectedTask(null);
 
      };
 
- 
+
 
      const handleDeleteTask = (taskId) => {
 
@@ -64,7 +74,18 @@
 
      };
 
+
  
+=======
+     const handleCloseTask = (task) => {
+
+             //Close the current task
+             setSelectedTask(null);
+
+         };
+
+
+
 
      return (
 
@@ -79,6 +100,8 @@
          {selectedTask && (
 
            <Task task={selectedTask} onEdit={handleEditTask} onDelete={handleDeleteTask} />
+=======
+           <Task task={selectedTask} onComplete={handleCompleteTask} onEdit={handleEditTask} onDelete={handleDeleteTask} onClose={handleCloseTask}/>
 
          )}
 
@@ -88,6 +111,5 @@
 
    };
 
- 
 
    export default App;
