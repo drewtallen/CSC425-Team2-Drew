@@ -28,7 +28,7 @@
 
        // Create a new task with a unique ID and mark it as not completed
 
-       const task = { ...newTask, id: tasks.length + 1 };
+       const task = { ...newTask, id: tasks.length + 1, completed: false };
 
        setTasks([...tasks, task]);
 
@@ -53,7 +53,7 @@
         task.completed = !task.completed;
 
         //I don't know what this does excatly but it breaks if I take it out
-        setTasks(tasks.map((task) => (task.id === task.id ? task : task)))
+        setTasks(tasks.map((t) => (t.id === task.id ? task : t)))
 
         //setSelectedTask(null);
 
