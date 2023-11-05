@@ -1,8 +1,7 @@
 
      // App.js
 
-=======
-import React, { useState } from 'react';
+  import React, { useState } from 'react';
 
    import TaskList from './TaskList';
 
@@ -10,17 +9,26 @@ import React, { useState } from 'react';
 
    import Task from './Task';
 
+   import TaskSearch from './TaskSearch';
+
+   import Popup from 'reactjs-popup';
+
+    import TaskEditForm from './TaskEditForm';
+
    const App = () => {
 
      const [tasks, setTasks] = useState([]);
 
      const [selectedTask, setSelectedTask] = useState(null);
 
+     const [editingTask, setEditingTask] = useState(null);
+
+
      const handleAddTask = (newTask) => {
 
        // Create a new task with a unique ID and mark it as not completed
 
-       const task = { ...newTask, id: tasks.length + 1, completed: false };
+       const task = { ...newTask, id: tasks.length + 1 };
 
        setTasks([...tasks, task]);
 
@@ -52,15 +60,23 @@ import React, { useState } from 'react';
     };
 
 
-     const handleEditTask = (editedTask) => {
-
-       // Update the task and clear the selection
-
-       setTasks(tasks.map((task) => (task.id === editedTask.id ? editedTask : task)));
-
-       setSelectedTask(null);
-
-     };
+    const handleEditTask = (editedTask) => {
+      // Update the selected task with the edited task
+      setSelectedTask(editedTask);
+      setEditingTask(editedTask);
+    };
+  
+    const handleSaveEditedTask = (editedTask) => {
+      // Update the task in the 'tasks' state
+      const updatedTasks = tasks.map((task) =>
+        task.id === editedTask.id ? editedTask : task
+      );
+      setTasks(updatedTasks);
+  
+      // Update the selected task with the edited task
+      setSelectedTask(editedTask);
+      setEditingTask(null); // Close the edit form
+    };
 
 
 
@@ -76,13 +92,12 @@ import React, { useState } from 'react';
 
 
  
-=======
      const handleCloseTask = (task) => {
 
              //Close the current task
              setSelectedTask(null);
 
-         };
+      };
 
 
 
@@ -95,16 +110,31 @@ import React, { useState } from 'react';
 
          <TaskForm onTaskAdd={handleAddTask} />
 
-         <TaskList tasks={tasks} onTaskClick={handleTaskClick} />
+         <TaskList tasks={tasks} onTaskClick={handleTaskClick}/>
 
          {selectedTask && (
 
-           <Task task={selectedTask} onEdit={handleEditTask} onDelete={handleDeleteTask} />
-=======
            <Task task={selectedTask} onComplete={handleCompleteTask} onEdit={handleEditTask} onDelete={handleDeleteTask} onClose={handleCloseTask}/>
 
          )}
 
+         <TaskSearch taskListClick={handleTaskClick}/>
+
+
+         {editingTask && (
+        <Popup open modal nested closeOnDocumentClick onClose={() => setEditingTask(null)}>
+          {(close) => (
+            <TaskEditForm
+              task={editingTask}
+              onSave={handleSaveEditedTask}
+              onCancel={() => {
+                setEditingTask(null);
+                close();
+              }}
+            />
+          )}
+        </Popup>
+      )}
        </div>
 
      );
